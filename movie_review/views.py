@@ -13,6 +13,7 @@ def index_button(request):
     working.go()
     return render(request, 'homepage.html')
 
+# this is for testing if script run
 def thispage(request):
     return render(request, 'apage.html')
 
@@ -25,6 +26,7 @@ def apage(request):
     return render(request, 'apage.html',{'data1': out.stdout})
 
 
+# will work on this letter
 def analysis(request):
     # analysis page will be defined here
     return render(request, 'analysis.html')
