@@ -1,14 +1,5 @@
-import keras
-import numpy as np
-import pandas as pd
-from keras.models import load_model
-from keras.preprocessing import image
-from keras.preprocessing.image import ImageDataGenerator
-import cv2
-import pickle
-import h5py
-import datetime
-import os
+
+import os, sys
 
 from django.shortcuts import render
 from .mdls import working, cvcv
@@ -22,16 +13,20 @@ def index_button(request):
     working.go()
     return render(request, 'homepage.html')
 
+def thispage(request):
+    return render(request, 'apage.html')
+
+def apage(request):
+    if request.method == request.POST:
+        inp = request.POST.get('param')
+        out = run([sys.executable,'/media/niketan/cartush/project/major/mdls/cvcv.py',inp],
+                  shell=False,stdout=PIPE)
+        print(out)
+    return render(request, 'apage.html',{'data1': out.stdout})
+
+
 def analysis(request):
     # analysis page will be defined here
     return render(request, 'analysis.html')
 
-def thispage(request):
-    return render(request, 'apage.html')
 
-
-def apage(request):
-    info = request.POST
-    out = run()
-
-    return render(request, 'apage.html')
