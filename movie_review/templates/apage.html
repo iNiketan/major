@@ -1,0 +1,17 @@
+{% extends 'basic.html' %}
+
+{% block content %}
+
+  <p>this is apage</p>
+  <button>Do something!</button>
+  <form action="apage/" method="post">
+    {% csrf_token %}
+    input text
+    <input type="text" name="param"><br>
+    {{data_external}}<br><br>
+    {{data1}}
+    <input type="submit" value="Execute External Python Script">
+
+  </form>
+
+{% endblock %}

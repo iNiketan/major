@@ -2,6 +2,7 @@ import cv2
 import sys
 
 i = sys.argv[1]
+print(i)
 cam = cv2.VideoCapture(0)
 while True:
     _, frame = cam.read()

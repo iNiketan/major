@@ -1,12 +1,13 @@
 from django.urls import path
+from django.conf.urls import url
 from . import views
 
 app_name = 'movie_review'
 
 urlpatterns = [
-    path("", views.index, name='frontpage'),
-    path("thispage/", views.thispage, name='page'),
-    path("apage/", views.apage),
+    url(r'^$', views.index, name='frontpage'),
+    url(r'^thispage', views.thispage, name='page'),
+    url(r'^apage', views.apage),
 
 
 
