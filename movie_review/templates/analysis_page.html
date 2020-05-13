@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% load static %}
+    <img src="{% static 'images/scatter_plot.png' type='img/png' %}" alt="scatter plot">
+    <img src="{% static 'images/box_plot.png' type='img/png' %}" alt="box plot">
+    <img src="{% static 'images/violin_plot.png' type='img/png' %}" alt="violin plot">
+
+    <a href="/">back_to_home</a>
+{% endblock %}
