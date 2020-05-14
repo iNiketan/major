@@ -1,20 +1,16 @@
-import keras
 import numpy as np
 import pandas as pd
 from keras.models import load_model
 from keras.preprocessing import image
-from keras.preprocessing.image import ImageDataGenerator
+#from keras.preprocessing.image import ImageDataGenerator
 import cv2
-import pickle
 
 import datetime
 import os
 
 file = "mdl33.h5"
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-print(BASE_DIR)
 this = os.path.join(BASE_DIR, file)
-print(this)
 # load model
 model = load_model(this)
 #----------------------------------------------
@@ -55,12 +51,12 @@ if flag:
             predicted_emotion = emotions[max_index]
             lst.append(predicted_emotion)
             timestamp.append(datetime.datetime.now())
-            cv2.putText(test_img, predicted_emotion, (int(x), int(y)), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+            #cv2.putText(test_img, predicted_emotion, (int(x), int(y)), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
 
-        resized_img = cv2.resize(test_img, (1000, 700))
+        #resized_img = cv2.resize(test_img, (1000, 700))
 
         # out.write(resized_img)
-        cv2.imshow('Facial emotion analysis ', resized_img)
+        #cv2.imshow('Facial emotion analysis ', resized_img)
 
         # to tweak with frame per second change the value inside the cv2.waitKey(?)
 
@@ -74,5 +70,4 @@ if flag:
     df = pd.DataFrame(data)
     df_name = "dataout.pkl"
     df.to_pickle(os.path.join(os.path.dirname(os.path.abspath(__file__)), df_name))
-# df.describe()
-#d = pd.read_pickle("dataout")
+
