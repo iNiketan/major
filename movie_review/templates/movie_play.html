@@ -1,11 +1,20 @@
 {% extends 'base.html' %}
-
+<!-- https://drive.google.com/open?id=1Yg9chvTklqmKUgcBS6J47K_mle2eY8EI -->
 {% block content %}
   {% load static %}
+  <br>
+  <br>
+  <!-- this is to play video from with link use /embed/ in youtube link -->
+  <iframe width="625" height="450" src="https://www.youtube.com/embed/AkLnj5pJtDI"
+           title="Movie" frameborder="0" allowfullscreen></iframe>
+  <!--
+  this was to play video from server
   <video width='720' height= '600' controls>
     <source src="{% static 'videos/some.mp4' type='video/mp4' %}">
       Your browser does not support the video tag.
   </video>
+  -->
+
   <br>
   <br>
   <form action="{% url 'movie_review:movie_button' %}" method="post">

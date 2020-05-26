@@ -22,52 +22,51 @@ lst = []
 timestamp = []
 cap=cv2.VideoCapture(0)  # keep it zero for live feed from webcam
 
-flag = True
-if flag:
-    while True:
-        ret, test_img = cap.read()  # captures frame and returns boolean value and captured image
-        if not ret:
-            continue
-        gray_img = cv2.cvtColor(test_img, cv2.COLOR_BGR2GRAY)
 
-        faces_detected = face_haar_cascade.detectMultiScale(gray_img, 1.32, 5)
+while True:
+    ret, test_img = cap.read()  # captures frame and returns boolean value and captured image
+    if not ret:
+        continue
+    gray_img = cv2.cvtColor(test_img, cv2.COLOR_BGR2GRAY)
 
-        for (x, y, w, h) in faces_detected:
-            cv2.rectangle(test_img, (x, y), (x + w, y + h), (255, 0, 0), thickness=7)
-            roi_gray = gray_img[y:y + w, x:x + h]  # cropping region of interest i.e. face area from  image
-            # formating image for model
-            roi_gray = cv2.resize(roi_gray, (48, 48))
-            img_pixels = image.img_to_array(roi_gray)
-            img_pixels = np.expand_dims(img_pixels, axis=0)
-            img_pixels /= 255
+    faces_detected = face_haar_cascade.detectMultiScale(gray_img, 1.32, 5)
 
-            predictions = model.predict(img_pixels)
+    for (x, y, w, h) in faces_detected:
+        cv2.rectangle(test_img, (x, y), (x + w, y + h), (255, 0, 0), thickness=7)
+        roi_gray = gray_img[y:y + w, x:x + h]  # cropping region of interest i.e. face area from  image
+        # formating image for model
+        roi_gray = cv2.resize(roi_gray, (48, 48))
+        img_pixels = image.img_to_array(roi_gray)
+        img_pixels = np.expand_dims(img_pixels, axis=0)
+        img_pixels /= 255
 
-            # find max indexed array
-            # print(predictions)
-            max_index = np.argmax(predictions[0])
+        predictions = model.predict(img_pixels)
 
-            emotions = ('angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral')
-            predicted_emotion = emotions[max_index]
-            lst.append(predicted_emotion)
-            timestamp.append(datetime.datetime.now())
-            #cv2.putText(test_img, predicted_emotion, (int(x), int(y)), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+        # find max indexed array
+        # print(predictions)
+        max_index = np.argmax(predictions[0])
 
-        #resized_img = cv2.resize(test_img, (1000, 700))
+        emotions = ('angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral')
+        predicted_emotion = emotions[max_index]
+        lst.append(predicted_emotion)
+        timestamp.append(datetime.datetime.now())
+        cv2.putText(test_img, predicted_emotion, (int(x), int(y)), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
 
-        # out.write(resized_img)
-        #cv2.imshow('Facial emotion analysis ', resized_img)
+    resized_img = cv2.resize(test_img, (200, 200))
 
-        # to tweak with frame per second change the value inside the cv2.waitKey(?)
+    # out.write(resized_img)
+    cv2.imshow('Facial emotion analysis ', resized_img)
 
-        if cv2.waitKey(100) == ord('q'):  # wait until 'q' key is pressed
-            break
+    # to tweak with frame per second change the value inside the cv2.waitKey(?)
 
-    cap.release()
-    cv2.destroyAllWindows()
+    if cv2.waitKey(100) == ord('q'):  # wait until 'q' key is pressed
+        break
 
-    data = {'expressions': lst, 'timestamp': timestamp}
-    df = pd.DataFrame(data)
-    df_name = "dataout.pkl"
-    df.to_pickle(os.path.join(os.path.dirname(os.path.abspath(__file__)), df_name))
+cap.release()
+cv2.destroyAllWindows()
+
+data = {'expressions': lst, 'timestamp': timestamp}
+df = pd.DataFrame(data)
+df_name = "dataout.pkl"
+df.to_pickle(os.path.join(os.path.dirname(os.path.abspath(__file__)), df_name))
 

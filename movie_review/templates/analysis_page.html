@@ -5,6 +5,12 @@
     <img src="{% static 'images/scatter_plot.png' type='img/png' %}" alt="scatter plot">
     <img src="{% static 'images/box_plot.png' type='img/png' %}" alt="box plot">
     <img src="{% static 'images/violin_plot.png' type='img/png' %}" alt="violin plot">
-
+    <img src="{% static 'images/pie_plot.png' type='img/png' %}" alt="pie plot">
+    <form method="POST">
+        {% csrf_token %}
+        {% if imgfile %}
+            <h3>{{ imgfile | safe }}</h3>
+        {% endif %}
+    </form>
     <a href="/">back_to_home</a>
 {% endblock %}

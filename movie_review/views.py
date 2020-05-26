@@ -21,6 +21,7 @@ def movie_play_button(request):
     out = run([sys.executable, u], shell=False, stdout=PIPE)
     return render(request, 'movie_play.html', {'modelfile': out.stdout})
 
+# this button run analysis.py and render analysis page
 def movie_analysis_button(request):
     file_path = "mdls/analysis.py"
     u = os.path.join(BASE_DIR, file_path)
